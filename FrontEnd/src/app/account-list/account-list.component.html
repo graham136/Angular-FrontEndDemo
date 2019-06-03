@@ -1,0 +1,77 @@
+<!--
+Account List Component
+  Components
+  Top Bar         - The top bar is a css generated menu bar, with a gradient
+                    background.
+
+  Bootstrap Table - The table is a bootstrap 4.0 repsonsive table
+
+  Style Classes
+  Top Bar         - The styles are declared on the ID TopBar. This is in contrast
+                    to style classes in the splash component and inline style in the
+                    bootstrap table.
+
+  Bootstrap Table - The styles are inline so you know I can also do inline styling in contrast to
+                    the Splash component which is done with style classes. The style classes
+                    are declared the styles.css so they can be swapped in.
+
+  Animations
+  EnterLeave      - The animation is imported from Animations/EnterLeaveAnimations.
+                    This in contrast to the splash screen where it was declared in
+                    the component itself.
+
+  Functions
+  openWithDrawDialog(index: number)       - Loads the Withdraw dialog
+  ComputeBalance()                        - Computes the total balance left to
+                                            withdraw from the accounts.
+  This is component to loaded by clicking the continue button on splash screen.
+-->
+
+<!--Top Bar-->
+<div [@EnterLeave]="'flyIn'">
+  <div id="TopBar">
+    <h3>Acme Bank</h3>
+  </div>
+
+  <!-- Bootstrap Striped Responsive Table -->
+  <br>
+  <div class="container"
+    style="font-size: 1vw;width:90% !important;margin: 0 auto !important;background-color:white;box-shadow: 0 0 10px lightgrey">
+    <br>
+    <br>
+    <h2 style="color:crimson;font-size: 1.3vw;"><b>Account List</b></h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>AccountNumber</th>
+          <th>Account Type</th>
+          <th>Balance</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--Angular double binding with displayAccounts
+            account_number    -displayed left aligned
+            account_type      -displayed left aligned
+            balance           -currency pipe formatting-->
+        <tr *ngFor="let displayAccount of displayAccounts; let i = index">
+          <td>{{ displayAccount.account_number }}</td>
+          <td>{{ displayAccount.account_type }}</td>
+          <td>{{ displayAccount.balance | currency:'ZAR ':false }}</td>
+          <td><button [disabled]="displayAccount.buttonDisabled" class="withdrawButton"
+              (click)="openWithDrawDialog(i)">Withdraw</button></td>
+        </tr>
+        <tr>
+          <!--
+            Angular double binding with balance computed with function compute balance
+          -->
+          <td style="font-size: 1.2vw;"><b>Balance</b></td>
+          <td></td>
+          <td><b>{{ accountService.currentBalance | currency:'ZAR ':false}}</b></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+  </div>
+</div>

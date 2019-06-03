@@ -1,0 +1,50 @@
+<!--
+  Components
+  Mat-Dialog      - Angular Material Dialog
+  input           - input of type number to input number value
+  button          - Sass interpretation of bootstrap warning and success buttons.
+
+  Style Classes
+  scssBtn         - Sass button
+  green           - Interpretation of success bootstrap button
+  orange          - Interpretation of warning bootstrap button
+
+  Functions
+  onOk            - Function to withdraw money and exit to account list component.
+  onCancel        - Function to cancel and exit dialog to account list component.
+
+
+  This component is loaded by clicking an enable withdraw button in account list.
+
+
+  Withdraw component awaits a number input and validates it:
+    1. If amount is smaller than 0.01 then OK button is disabled
+    2. If amount is larger than the maxwithdrawal computed in accountlogic OK
+       button is disabled.
+    3. If amount is valid(0.01<=amount<=maxwithdrawal) OK button is enabled.
+
+  -->
+
+<div class="modal-header">
+  <h4 class="modal-title">Please select an amount to withdraw</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]="myForm">
+    <label for="Amount">Withdraw Amount: </label>
+    <input type='number' id="Amount" formControlName="Amount" step="0.01" required value="">
+    <br>
+    <ng-template [ngIf]="myForm.controls['Amount'].hasError('max')">
+      Maximum amount that you can withdraw is
+      {{ accountService.currentAccount.maxWithDrawAmount | currency:'ZAR ':false }}.
+    </ng-template>
+    <ng-template [ngIf]="myForm.controls['Amount'].hasError('min')">
+      Minimum amount that you can withdraw is ZAR 0.01
+    </ng-template>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="orange scssBtn float-right" (click)="onCancel()">Cancel</button>
+  <button type="button" class="green scssBtn float-right" (click)="onOk()"
+    [disabled]="myForm.controls['Amount'].errors">Ok</button>
+</div>

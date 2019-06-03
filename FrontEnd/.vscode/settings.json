@@ -1,0 +1,7 @@
+{
+    "appService.zipIgnorePattern": [
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/89c8b03e-2ba7-4ee8-9633-1d8f73bdbd44/resourceGroups/AbsaDemo/providers/Microsoft.Web/sites/OwenDemo",
+    "appService.deploySubpath": ""
+}
